@@ -1,0 +1,122 @@
+(dan 
+    (OAM (list 
+            (sprite (name Radd) 
+                (animation (name Look_Right) (Special_Edition Rulebreakers Radd Look_Right))
+                (animation (name Look) (Special_Edition Rulebreakers Radd Look))
+                (animation (name Air_Guitar) (Special_Edition Rulebreakers Radd Air_Guitar))
+                (animation (name HD_Air_Guitar) (HD Rulebreakers Radd Air_Guitar))
+                (animation (name Mugshot_Yo) (Special_Edition Rulebreakers Radd Mugshot_Yo))
+                (animation (name Mugshot_Air_Guitar) (Special_Edition Rulebreakers Radd Mugshot_Air_Guitar)))))
+    (Stages (list
+            (stage (name SAGE)
+                (background (single_image (Titles SAGE 1))))
+            (stage (name Kid_Radd) 
+                (background (single_image (Special_Edition Titles Kid_Radd 2009))
+                (load_OAM (sprites Radd (HD_Air_Guitar)))))
+            (stage (name Radds_House)
+                (background (single_image (Special_Edition Innocent_Lane Radds_House)))
+                (load_OAM (sprites Radd (Look_Right))))
+            (stage (name Zoom_Radds_House_BOING)
+                (background (single_image (Special_Edition Innocent_Lage Radds_Front_Lawn)))
+                (load_OAM (sprites Radd (Look_Right Look Air_Guitar Mugshot_Yo Mugshot_Air_Guitar)))
+                (zoom 3.0))))
+    (Sounds (list 
+            (sound (name cresendo)
+                (single_sound (RaddTeam SAGE)))
+            (sound (name Title_Theme)
+                (single_sound (RaddTeam Title KidRadd)))
+            (sound (name Bogey_Theme) (single_sound (Parsec Themes Bogey)))
+            (sound (name Air_Guitar) (single_sound (Server AirGuitar)))))
+    (Panels (list 
+            (script (name SAGE) (run
+                    (switch_stage (stage SAGE))
+                    (play_sound (entry cresendo) (channel sound-fx 1))
+                    (if autoplay (then
+                        (delay-call (tu 2)
+                        (dan-call Kid_Radd))))))
+            (script (name Kid_Radd) (run
+                    (put_sprite 
+                        (stage Kid_Radd) 
+                        (sprite Radd HD_Air_Guitar)
+                        (position (domain 25) (range 19) (shape 6) (size 6))
+                        (display inlineblock))
+                    (switch_stage (stage Kid_Radd))
+                    (play_sound (track title_Theme)
+                        (loop t)
+                        (channel music 1))
+                    (if autoplay (then
+                        (delay-call (tu 2) (dan-call panel1))))))
+            (script (name panel1) (run
+                    (put_sprite 
+                        (stage Radds_House)
+                        (sprite Radd Look_Right)
+                        (position (domain 15) (range 20) (shape 3) (size 2))
+                        (display inlineblock))
+                    (switch_stage (stage Radds_House))
+                    (play_sound (track Bogey_Theme)
+                        (loop t)
+                        (channel music 1))
+                    (put_speak
+                        (character Rufus)
+                        (text "Hi, and welcome to the retelling of Kid Radd: Wrath of CRystal"))
+                    (if autoplay (then
+                        (delay-call (tu 5) (dan-call panel2))))))
+             (script (name panel2) (run
+                    (put_sprite
+                        (stage Zoom_Radds_House_BOING)
+                        (sprite Radd Look_Right)
+                        (position (domain 2) (range 4) (shape 3) (size 2))
+                        (display inlineblock))
+                    (switch_stage (stage Zoom_Radds_House_BOING))
+                    (put_speak 
+                        (character Rufus)
+                        (text "Welcome to the world of Kid Radd. Specifically Radd's house, on Innocent Lane"))
+                    (if autoplay (then
+                        (delay-call (tu 5) (dan-call panel3))))))
+             (script (name panel3) (run
+                    (put_sprite
+                        (stage Zoom_Radds_House_BOING)
+                        (sprite Radd Look)
+                        (position (domain 2) (range 4) (shape 3) (size 2))
+                        (display inlineblock))
+                    (put_sprite
+                        (stage Zoom_Radds_House_BOING)
+                        (sprite Radd Mugshot_Yo)
+                        (position (domain 0) (range 0) (shape 4) (size 4))
+                        (display inlineblock))
+                    (switch_stage (stage Zoom_Radds_House_BOING))
+                    (put_speak 
+                        (character Radd)
+                        (text "Yo!"))
+                    (delay (tu 2))
+                    (remove_sprite (sprite Radd Mugshot_Yo))
+                    (remove_speak nil)
+                    (put_speak
+                        (character Rufus)
+                        (text "Meet Radd, Hero of the series and all around cool guy"))
+                    (if autoplay (then
+                        (delay-call (tu 5) (dan-call panel4)))))
+             (script (name panel4) (run
+                    (put_sprite
+                        (stage Zoom_Radds_House_BOING)
+                        (sprite Radd Air_Guitar)
+                        (position (domain 2) (range 4) (shape 3) (size 2))
+                        (display inlineblock))
+                    (put_sprite
+                        (stage Zoom_Radds_House_BOING)
+                        (sprite Radd Mugshot_Air_Guitar)
+                        (position (domain 0) (range 0) (shape 4) (size 4))
+                        (display inlineblock))
+                    (switch_stage (stage Zoom_Radds_House_BOING))
+                    (play_sound (entry Air_Guitar)
+                        (loop nil)
+                        (channel music 1))
+                    (put_speak
+                        (character Radd)
+                        (text "Air Guitar! Excellent!"))
+                    (delay (tu 4))
+                    (remove_sprite (sprite Radd Mugshot_Air_Guitar))
+                    (remove_speak nil)
+                    (put_speak
+                        (character Rufus)
+                        (text "Uh... by cool I do mean of course by mid1980s standards")))))))
